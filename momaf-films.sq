@@ -12,10 +12,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX elom: <http://elonet.finna.fi/movie#>
 PREFIX elop: <http://elonet.finna.fi/person#>
 
-select ?id ?ti ?yr where {
+select ?id ?ti ?dr ?yr where {
    ?e wdt:P31 p:Q11424 ;
       wdt:P2346 ?id ;
       rdfs:label ?ti ;
-      wdt:P577 ?yr .
-#     wdt:P57 [ rdfs:label ?dr ] .
+      wdt:P577 ?yr ;
+      wdt:P57 [ rdfs:label ?dr ] .
 }
