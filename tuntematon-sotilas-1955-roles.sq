@@ -1,0 +1,17 @@
+# SPARQL query for listing all actors and roles in Tuntematon sotilas (1955)
+
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX elom: <http://elonet.finna.fi/movie#>
+PREFIX elop: <http://elonet.finna.fi/person#>
+
+select * where {
+   elom:113528 p:P161 [ ps:P161 [ p:P2387 ?i ; rdfs:label ?a ] ; pq:P453 ?r ]
+}
