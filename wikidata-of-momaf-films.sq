@@ -1,0 +1,35 @@
+# SPARQL query for listing all known Wikidata and Wikipedia pages for MoMaF films
+
+PREFIX schema: <http://schema.org/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX elom: <http://elonet.finna.fi/movie#>
+PREFIX elop: <http://elonet.finna.fi/person#>
+
+# could show also ?wd_id
+
+select ?id ?title ?wd_url ?wp_url where {
+  ?e wdt:P31 p:Q11424 ;
+     wdt:P2346 ?id ;
+     rdfs:label ?title .
+  optional {
+    service <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      ?wd_id wdt:P2346 $id .
+      bind ( iri(concat("https://www.wikidata.org/wiki/",
+                        strafter(str(?wd_id),"entity/"))) as ?wd_url )
+      optional {
+        ?wp_url schema:about ?wd_id ;
+                schema:inLanguage "fi" ;
+                schema:isPartOf <https://fi.wikipedia.org/> .
+      }
+    }
+  }
+}
+
