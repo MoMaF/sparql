@@ -23,7 +23,7 @@ select ?id ?title ?elonet ?wikidata ?wikipedia ?imdb where {
                     ?id)) as ?elonet )
   optional {
     service <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
-      ?wd_id wdt:P2346 $id .
+      ?wd_id wdt:P2346 ?id .
       bind ( iri(concat("https://www.wikidata.org/wiki/",
                         strafter(str(?wd_id),"entity/"))) as ?wikidata )
       optional {
