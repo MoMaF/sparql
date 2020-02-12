@@ -1,0 +1,40 @@
+# SPARQL query for listing metadata links for top 600 actors in MoMaF films
+
+PREFIX schema: <http://schema.org/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX elom: <http://elonet.finna.fi/movie#>
+PREFIX elop: <http://elonet.finna.fi/person#>
+
+select ?actor (str(count(?m)) as ?n) ?elonet $wikidata $wikipedia $imdb where {
+   ?e rdfs:label ?actor ;
+      p:P2387 ?id . 
+   ?m p:P161 [ ps:P161 ?e ] . 
+  bind ( iri(concat("https://www.elonet.fi/fi/henkilo/",?id)) as ?elonet )
+
+  optional {
+    service <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+      ?wd_id wdt:P2387 ?id .
+      bind ( iri(concat("https://www.wikidata.org/wiki/",
+                        strafter(str(?wd_id),"entity/"))) as ?wikidata )
+      optional {
+        ?wikipedia schema:about ?wd_id ;
+                   schema:inLanguage "fi" ;
+                   schema:isPartOf <https://fi.wikipedia.org/> .
+      }
+      optional {
+        ?wd_id wdt:P345 ?imdb_id .
+	bind ( iri(concat("https://www.imdb.com/name/", ?imdb_id)) as ?imdb )
+      }
+    }
+  }
+} group by ?actor ?elonet $wikidata $wikipedia $imdb
+  order by DESC(xsd:integer(?n)) limit 600
+
