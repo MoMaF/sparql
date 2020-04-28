@@ -12,11 +12,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX elom: <http://elonet.finna.fi/movie#>
 PREFIX elop: <http://elonet.finna.fi/person#>
 
-select ?id ?ti (group_concat(?dr; separator=", ") as ?drs) ?yr where {
+select ?id ?ti (group_concat(?drs; separator=", ") as ?dr) ?yr where {
    ?e wdt:P31 p:Q11424 ;
       wdt:P2346 ?id ;
       rdfs:label ?ti ;
       wdt:P577 ?yr ;
-      optional { ?e wdt:P57 [ rdfs:label ?dr ]} .
+      optional { ?e wdt:P57 [ rdfs:label ?drs ]} .
 }
 group by ?id ?ti ?yr
