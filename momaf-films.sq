@@ -9,14 +9,16 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
 PREFIX elom: <http://elonet.finna.fi/movie#>
 PREFIX elop: <http://elonet.finna.fi/person#>
 
-select ?id ?ti (group_concat(?drs; separator=", ") as ?dr) ?yr where {
+select ?id ?ti (group_concat(?drs; separator=", ") as ?dr) (fn:year-from-dateTime(?yrd)  as ?yr) where {
    ?e wdt:P31 p:Q11424 ;
       wdt:P2346 ?id ;
       rdfs:label ?ti ;
-      wdt:P577 ?yr ;
+      wdt:P577 ?yrd ;
       optional { ?e wdt:P57 [ rdfs:label ?drs ]} .
 }
-group by ?id ?ti ?yr
+group by ?id ?ti ?yrd
+order by ?yrd
