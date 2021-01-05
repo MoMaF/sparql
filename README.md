@@ -8,3 +8,12 @@ data to a graph named <http://momaf-data.utu.fi/input> which should be
 created before running this script. After everything seems to be ok,
 move this graph to <http://momaf-data.utu.fi/wikidata_person> which is
 the designated name for person data derived from Wikidata.
+
+## `wikidata_movie.rq`
+
+Script used for enriching movie data from Wikidata. This script places
+the imported data to a graph named <http://momaf-data.utu.fi/input>
+which should be created before running this script. After everything
+seems to be ok, move this graph to
+<http://momaf-data.utu.fi/wikidata_movie> which is the designated name
+for movie data derived from Wikidata.

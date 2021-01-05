@@ -1,0 +1,23 @@
+# Query for updating person data from Wikidata.
+# This imports data to a temporary graph
+# The final data should be in <http://momaf-data.utu.fi/wikidata_movie>
+# Move graph after this import succeeds
+#
+# v.0.1: IMDb ID for persons
+
+PREFIX wikidata: <http://www.wikidata.org/entity/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix momaf: <http://momaf-data.utu.fi/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+insert { graph <http://momaf-data.utu.fi/input> {
+  ?sub momaf:IMDb_ID ?imdbid .
+  }
+} WHERE {
+  ?sub a momaf:Movie ; momaf:elonet_movie_ID ?eloid .
+  service <https://query.wikidata.org/sparql> {
+    ?ws wdt:P2346 ?eloid; wdt:P345 ?imdbid .
+  }
+} 
