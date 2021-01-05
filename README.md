@@ -1,6 +1,11 @@
 # sparql
 SPARQL scripts. Samples and also scripts used for updating actual data in triple store
 
+
+# Update scripts
+
+These scripts update the datasets in the database. They should be run only by the triple store admin, and are placed here only for documentation.
+
 ## `wikidata_person.rq`
 
 Script used to update person data. This script places the imported
