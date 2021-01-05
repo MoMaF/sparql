@@ -1,4 +1,4 @@
-# Query for updating person data from Wikidata.
+# Query for enriching movie data from Wikidata.
 # This imports data to a temporary graph
 # The final data should be in <http://momaf-data.utu.fi/wikidata_movie>
 # Move graph after this import succeeds
