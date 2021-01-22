@@ -34,6 +34,10 @@ select ?actor (str(count(?m)) as ?n) ?elonet $wikidata $wikipedia $imdb $gkg whe
 	bind ( iri(concat("https://www.imdb.com/name/", ?imdb_id)) as ?imdb )
       }
       optional {
+        ?wd_id wdt:P646 ?fb_id .
+	bind ( iri(concat("https://www.google.com/search?kponly&kgmid=", ?fb_id)) as ?gkg )
+      }
+      optional {
         ?wd_id wdt:P2671 ?gkg_id .
 	bind ( iri(concat("https://www.google.com/search?kponly&kgmid=", ?gkg_id)) as ?gkg )
       }
