@@ -1,0 +1,65 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix momaf: <http://momaf-data.utu.fi/>
+prefix wdt: <http://www.wikidata.org/prop/direct/>
+prefix wd: <http://www.wikidata.org/entity/>
+
+drop graph <http://momaf-data.utu.fi/wikidata_adminplace>;
+
+insert {
+  graph <http://momaf-data.utu.fi/wikidata_adminplace> 
+  {
+    ?pl wdt:P1203 ?kuntanumero .
+    ?pl wdt:P625 ?loc .
+    ?pl rdfs:label ?name .
+    ?pl momaf:wikidata_ID ?c .
+  }
+}
+where {
+  {
+    select * {
+      service <http://query.wikidata.org/sparql> {
+	{ 
+	  ?c wdt:P31 wd:Q17468533 . # Former municipality of Finland#
+	} 
+	union
+	{
+	  ?c wdt:P31 wd:Q856076 . # Municipality of Finland
+	}
+	?c rdfs:label ?name .
+	?c wdt:P1203 ?kuntanumero .
+	?c wdt:P625 ?loc . 
+      }
+    }
+  }
+  ?pl a momaf:Adminplace .
+  ?pl rdfs:label ?aname .
+  filter (strstarts(?aname,?name))
+};
+
+insert {
+  graph <http://momaf-data.utu.fi/adminplace_wikidata> 
+  {
+    ?pl wdt:P1203 ?kuntanumero .
+    ?pl wdt:P625 ?loc .
+    ?pl rdfs:label ?name .
+    ?pl momaf:wikidata_ID ?c .
+  }
+}
+where {
+  {
+    select * where {
+      ?pl a momaf:Adminplace .
+      ?pl rdfs:label ?name .
+      minus {?pl wdt:P625 ?sij }
+    } order by ?name 
+  }
+  service <http://query.wikidata.org/sparql> {
+    { 
+      ?c wdt:P31 wd:Q515 . # City
+    } 
+    ?c rdfs:label ?name .
+    optional { ?c wdt:P1203 ?kuntanumero . }
+    ?c wdt:P625 ?loc . 
+  }
+}

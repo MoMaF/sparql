@@ -17,3 +17,11 @@ which should be created before running this script. After everything
 seems to be ok, move this graph to
 <http://momaf-data.utu.fi/wikidata_movie> which is the designated name
 for movie data derived from Wikidata.
+
+## `update-adminplace-locationdata.rq`
+
+SPARQL script that updates the Adminplace location information from Wikidata.
+
+Result is stored in named graph <http://momaf-data.utu.fi/wikidata_adminplace>.
+
+This SPARQL script must be run with a client with update rights.
