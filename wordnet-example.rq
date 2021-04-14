@@ -1,0 +1,15 @@
+# This SPARQL query example shows how to get the various Wordnet senses for the word "tomaatti" (Finnish for "tomatoe")
+#
+# This query can be run against the MoMaF triple store that includes the whole Wordnet Finnish language dataset.
+# NB! You do not need to name the graph to query. The rows 12 and 14 can be left out, and the result is the same. 
+# The Wordnet data could be used in NER and such.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix momaf: <http://momaf-data.utu.fi/>
+prefix lemon: <http://lemon-model.net/lemon#>
+SELECT * WHERE {
+  graph momaf:wordnet-fin {
+    [ lemon:writtenRep "tomaatti"@fin ] ^lemon:canonicalForm [ lemon:sense/lemon:reference ?o ] .
+  }
+} LIMIT 100
